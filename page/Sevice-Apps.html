@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- its is vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <!-- its sweet alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+    <!-- it is bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <!-- creator : -->
+    <!-- github : alifmaheaven.github.io -->
+    <!-- instagram : sini.sama.om -->
+    <!-- facebook : alif maheavenstyle kelap -->
+
+</head>
+<body>
+    <h1 class="text-center">Tempat Service Apapun Barang Elektronik anda</h1>
+    <div id="app">
+        <div class="col-12 d-flex p-2 justify-content-center">
+            <div class="col-8 mt-4 ">
+                <button v-on:click="addModal" class="btn btn-success mb-1">tambah</button>
+                <table class="table table-hover table-striped text-centered">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nama Barang</th>
+                        <th scope="col">tinggkat kesulitan</th>
+                        <th scope="col">Harga</th>
+                        <th scope="col">QTY</th>
+                        <th scope="col">Total Harga</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <!-- disini proses looping ya :) -->
+                        <!-- dari array barang kita looping disini -->
+                        <!-- note : index untuk penomeran atau indexing -->
+                      <tr v-for="(row, index) in barang" >
+                        <th scope="row">{{index + 1}}</th>
+                        <td>{{row.nama}}</td>
+                        <td>{{ difficulty.find(x => x.id == row.id_difficulty).nama}}</td>
+                        <td>{{ difficulty.find(x => x.id == row.id_difficulty).harga}}</td>
+                        <td>
+                            <button type="button" class="btn btn-success" v-on:click="countTambah(index)">+</button>
+                            {{row.qty}}
+                            <button type="button" class="btn btn-danger" v-on:click="countKurang(index)">-</button>
+                        </td>
+                        <!-- disini kita mengalikan qty dengan harga pada id dificult -->
+                        <!-- kalian hanya bisa log pada bagian javasctipt, bukan bagian dom ya :) -->
+                        <td>{{ difficulty.find(x => x.id == row.id_difficulty).harga * row.qty}}</td>
+                        <td>
+                            <!-- buttonnya saya tambahin index untu edit dan hapus, anggep aja id nya kita ambil dan kita edit  -->
+                            <button v-on:click="editModal(index)" class="btn btn-warning mr-1 ml-1">edit</button>
+                            <button v-on:click="deleteData(index)" class="btn btn-danger mr-1 ml-1">delete</button>
+                        </td>
+                      </tr>
+
+                      <!-- grandtotal akan tampil kalau barang ada valuenya, eh kok value. isinya maksutnya. -->
+                      <tr v-if="barang.length > 0">
+                          <td class="text-right" colspan="5">
+                            <h4>grand Total</h2> 
+                          </td>
+                          <td>
+                              <!-- disini adalah script grand totalnya, sekali lagi ingat.  -->
+                              <!-- vue js hanya bisa di coding satu baris dan tidak bisa -->
+                              <!-- banyak baris sekaligus pada bagian domnya  -->
+                            <h4> {{barang.reduce((acc, item) => acc + difficulty.find(x => x.id == item.id_difficulty).harga * item.qty, 0)}}</h4>
+                          </td>
+                          <td><button v-on:click="checkout" type="button" class="btn btn-danger"> Checkout </button></td>
+                      </tr>
+
+                      <!-- ini akan tampil kalau array barang masih belum mempunyai value -->
+                      <tr v-if="!barang.length > 0">
+                          <td class="text-center" colspan="7"> Belum ada data ya! silahkan tambahkan data terlebih dahulu!</td>
+                      </tr>
+                      
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+
+        <!-- modalnya ya -->
+        <!-- dimodal kita menggunakan v-model, dimana v-model ini fasilitas dari vuejs itu sendiri, -->
+        <!-- untuk menampilkan data secara realtime -->
+        <div class="modal fade" id="iniModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 v-if="isEdit" class="modal-title" id="exampleModalLabel">Edit</h5>
+                  <h5 v-else>Tambah</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="form-group">
+                      <label for="recipient-name" class="col-form-label">Nama Barang :</label>
+                      <input type="text" class="form-control" v-model="dataModal.nama" id="recipient-name" v-bind:class="{ 'border': !dataModal.nama, 'border-danger': !dataModal.nama, 'border-3': !dataModal.nama }">
+                      <div v-if="!dataModal.nama" style="display: block !important;" class="invalid-feedback">
+                        Mohon Nama barang di isi!
+                    </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlSelect1">kesulitan</label>
+                        <select class="form-control" v-bind:class="{ 'border': !dataModal.id_difficulty, 'border-danger': !dataModal.id_difficulty, 'border-3': !dataModal.id_difficulty }" v-model="dataModal.id_difficulty" id="exampleFormControlSelect1">
+                          <option v-for="(row, index) in difficulty" :key="row.id" :value="row.id">{{row.nama}}</option>
+                        </select>
+                        <div v-if="!dataModal.id_difficulty" style="display: block !important;" class="invalid-feedback">
+                            Mohon tingkat kesulitan di isi!
+                        </div>
+                      </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Harga:</label>
+                        <h6 v-if="dataModal.id_difficulty">{{ difficulty.find(x => x.id == dataModal.id_difficulty).harga}}</h6>
+                        <h6 v-else>0</h6>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">QTY:</label>
+                        <div class="row col-12">
+                            <button type="button" class="btn btn-success" v-on:click="countTambah">+</button>
+                            <input style="width: min-content;" type="number" class="form-control" v-model="dataModal.qty" id="recipient-name" v-bind:class="{ 'border': !dataModal.qty, 'border-danger': !dataModal.qty, 'border-3': !dataModal.qty }">
+                            <button type="button" class="btn btn-danger" v-on:click="countKurang">-</button>
+                        </div>
+                        <div v-if="!dataModal.qty" style="display: block !important;" class="invalid-feedback">
+                            Mohon QTY di isi!
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Total Harga:</label>
+                        <h1 v-if="!dataModal.qty">0</h1>
+                        <h1 v-else-if="!dataModal.id_difficulty">0</h1>
+                        <h1 v-else>{{ difficulty.find(x => x.id == dataModal.id_difficulty).harga * dataModal.qty}}</h1>
+                    </div>
+                  </form>
+                </div>
+                <!-- dibagian sini perhatikan, saya menggunakan if else untuk buttonnya agar gak bikin 2 modal,  -->
+                <!-- capek uy bikin 2 modal dan bakal makan banyak waktu banget -->
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">batal</button>
+                  <button v-if="isEdit" type="button" class="btn btn-warning" v-on:click="editData(dataModal.index)">Edit</button>
+                  <button v-else type="button" class="btn btn-success" v-on:click="addData">tambah</button>
+                </div>
+              </div>
+            </div>
+          </div>
+    </div>
+
+
+    <!-- dibagian sini kalian akan main logic ya -->
+    <!-- untuk vue punya beberapa bagian penting -->
+    <!-- diantaranya : -->
+    <!-- 1. data : tempat data kita simpan -->
+    <!-- 2. methods : tempat fungsi fungsi-->
+    <!-- selebihnya kalian bisa eksplore sendiri ya :) -->
+
+    <script>
+        var app = new Vue({
+            // ini element tempat deklarasi vuenya yaitu : <div id="app">
+            el: '#app',
+            // nih tempat datanya
+            data: {
+                isEdit: false,
+                difficulty: [
+                    {
+                        id:1,
+                        harga:2000,
+                        nama: 'low',
+                    },
+                    {
+                        id:2,
+                        harga:3000,
+                        nama: 'medium',
+                    },
+                    {
+                        id:3,
+                        harga:4000,
+                        nama: 'high',
+                    },
+                ],
+                dataModal: {
+                    nama: null,
+                    id_difficulty: null,
+                    qty: null,
+                },
+                barang: [
+                    // {
+                    //     nama: 'laptop',
+                    //     id_difficulty: '1',
+                    //     qty: '10',
+                        
+                    // },
+                    // {
+                    //     nama : 'laptop',
+                    //     id_difficulty : '1',
+                    //     qty : '10',
+                        
+                    // }
+                ]
+            },
+            // santai aja fungsinya sama kok sama kayak javascript pada umumnya
+            // kalian bisa maen lognya aja
+            methods: {
+                countTambah: function(index) {
+                    if (typeof index === "number") {
+                        this.barang[index].qty++
+                    } else {
+                        if (this.dataModal.qty == null) {
+                            var data = this.dataModal
+                            data["qty"] = 0
+                            this.dataModal = data
+                        } else {
+                            this.dataModal.qty++
+                        }
+                    }
+                },
+                countKurang: function(index) {
+                    if (typeof index === "number") {
+                        if (this.barang[index].qty > 1) {
+                            this.barang[index].qty--
+                        } else {
+                            Swal.fire({
+                                title: 'Apa kamu yakin ?',
+                                text: "Mengurangi QTY akan meremove item ini!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Oke!'
+                                }).then((result) => {
+                                if (result.value) {
+                                    this.barang.splice(index, 1)
+                                    Swal.fire(
+                                        'Terhapus!',
+                                        'Menghapus data sukses.',
+                                        'success'
+                                    )
+                                }
+                            })
+                        }
+                    } else {
+                        if (this.dataModal.qty == null) {
+                            var data = this.dataModal
+                            data["qty"] = 0
+                            this.dataModal = data
+                        } else {
+                            if (this.dataModal.qty > 0) {
+                                this.dataModal.qty--
+                            }
+                        }
+                    }
+                },
+                addData: function() {
+                    var data = this.dataModal
+                    var valid = 0
+                    $.each(data, function(row){
+                        if (!data[row]) {
+                            valid++
+                        }
+                    })
+                    if (!valid > 0) {
+                        this.barang.push(this.dataModal)
+                        $('#iniModal').modal('hide');
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lengkapi data anda!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+                    
+                },
+                editData: function(index) {
+                    var data = this.dataModal
+                    var valid = 0
+                    $.each(data, function(row){
+                        if (row !== "index") {
+                            if (!data[row]) {
+                                valid++
+                            }
+                        }
+                    })
+
+                    if (!valid > 0) {
+                        delete this.dataModal.index
+                        this.barang[index] = this.dataModal
+                        $('#iniModal').modal('hide');
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lengkapi data anda!',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+                },
+                deleteData: function(index) {
+                    this.barang.splice(index, 1)
+                },
+                addModal: function() {
+                    this.dataModal = {
+                        nama: null,
+                        id_difficulty: null,
+                        qty: null,
+                    }
+                    this.isEdit = false
+                    $('#iniModal').modal('show');
+                },
+                editModal: function(index) {
+                    var data = this.barang[index]
+                    data["index"] = index
+                    this.dataModal = data
+                    this.isEdit = true
+                    $('#iniModal').modal('show');
+                },
+                checkout: function(params) {
+
+                    this.barang =[]
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil Checkout',
+                        showConfirmButton: false,
+                        timer: 2500
+                    })
+                }
+            },
+        })
+    </script>
+</body>
+</html>
