@@ -27,65 +27,68 @@
     <h1 class="text-center">Tempat Service Apapun Barang Elektronik anda</h1>
     <div id="app">
         <div class="col-12 d-flex p-2 justify-content-center">
-            <div class="col-8 mt-4 ">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8 mt-4 ">
                 <button v-on:click="addModal" class="btn btn-success mb-1">tambah</button>
-                <table class="table table-hover table-striped text-centered">
-                    <thead class="thead-dark">
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Nama Barang</th>
-                        <th scope="col">tinggkat kesulitan</th>
-                        <th scope="col">Harga</th>
-                        <th scope="col">QTY</th>
-                        <th scope="col">Total Harga</th>
-                        <th scope="col">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                        <!-- disini proses looping ya :) -->
-                        <!-- dari array barang kita looping disini -->
-                        <!-- note : index untuk penomeran atau indexing -->
-                      <tr v-for="(row, index) in barang" >
-                        <th scope="row">{{index + 1}}</th>
-                        <td>{{row.nama}}</td>
-                        <td>{{ difficulty.find(x => x.id == row.id_difficulty).nama}}</td>
-                        <td>{{ difficulty.find(x => x.id == row.id_difficulty).harga}}</td>
-                        <td>
-                            <button type="button" class="btn btn-success" v-on:click="countTambah(index)">+</button>
-                            {{row.qty}}
-                            <button type="button" class="btn btn-danger" v-on:click="countKurang(index)">-</button>
-                        </td>
-                        <!-- disini kita mengalikan qty dengan harga pada id dificult -->
-                        <!-- kalian hanya bisa log pada bagian javasctipt, bukan bagian dom ya :) -->
-                        <td>{{ difficulty.find(x => x.id == row.id_difficulty).harga * row.qty}}</td>
-                        <td>
-                            <!-- buttonnya saya tambahin index untu edit dan hapus, anggep aja id nya kita ambil dan kita edit  -->
-                            <button v-on:click="editModal(index)" class="btn btn-warning mr-1 ml-1">edit</button>
-                            <button v-on:click="deleteData(index)" class="btn btn-danger mr-1 ml-1">delete</button>
-                        </td>
-                      </tr>
-
-                      <!-- grandtotal akan tampil kalau barang ada valuenya, eh kok value. isinya maksutnya. -->
-                      <tr v-if="barang.length > 0">
-                          <td class="text-right" colspan="5">
-                            <h4>grand Total</h2> 
-                          </td>
-                          <td>
-                              <!-- disini adalah script grand totalnya, sekali lagi ingat.  -->
-                              <!-- vue js hanya bisa di coding satu baris dan tidak bisa -->
-                              <!-- banyak baris sekaligus pada bagian domnya  -->
-                            <h4> {{barang.reduce((acc, item) => acc + difficulty.find(x => x.id == item.id_difficulty).harga * item.qty, 0)}}</h4>
-                          </td>
-                          <td><button v-on:click="checkout" type="button" class="btn btn-danger"> Checkout </button></td>
-                      </tr>
-
-                      <!-- ini akan tampil kalau array barang masih belum mempunyai value -->
-                      <tr v-if="!barang.length > 0">
-                          <td class="text-center" colspan="7"> Belum ada data ya! silahkan tambahkan data terlebih dahulu!</td>
-                      </tr>
-                      
-                    </tbody>
-                  </table>
+                <div style="overflow-x: auto;">
+                    <table class="table table-hover table-striped text-centered">
+                        <thead class="thead-dark">
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nama Barang</th>
+                            <th scope="col">tinggkat kesulitan</th>
+                            <th scope="col">Harga</th>
+                            <th scope="col">QTY</th>
+                            <th scope="col">Total Harga</th>
+                            <th scope="col">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <!-- disini proses looping ya :) -->
+                            <!-- dari array barang kita looping disini -->
+                            <!-- note : index untuk penomeran atau indexing -->
+                          <tr v-for="(row, index) in barang" >
+                            <th scope="row">{{index + 1}}</th>
+                            <td>{{row.nama}}</td>
+                            <td>{{ difficulty.find(x => x.id == row.id_difficulty).nama}}</td>
+                            <td>{{ difficulty.find(x => x.id == row.id_difficulty).harga}}</td>
+                            <td>
+                                <button type="button" class="btn btn-success" v-on:click="countTambah(index)">+</button>
+                                {{row.qty}}
+                                <button type="button" class="btn btn-danger" v-on:click="countKurang(index)">-</button>
+                            </td>
+                            <!-- disini kita mengalikan qty dengan harga pada id dificult -->
+                            <!-- kalian hanya bisa log pada bagian javasctipt, bukan bagian dom ya :) -->
+                            <td>{{ difficulty.find(x => x.id == row.id_difficulty).harga * row.qty}}</td>
+                            <td>
+                                <!-- buttonnya saya tambahin index untu edit dan hapus, anggep aja id nya kita ambil dan kita edit  -->
+                                <button v-on:click="editModal(index)" class="btn btn-warning mr-1 ml-1">edit</button>
+                                <button v-on:click="deleteData(index)" class="btn btn-danger mr-1 ml-1">delete</button>
+                            </td>
+                          </tr>
+    
+                          <!-- grandtotal akan tampil kalau barang ada valuenya, eh kok value. isinya maksutnya. -->
+                          <tr v-if="barang.length > 0">
+                              <td class="text-right" colspan="5">
+                                <h4>grand Total</h2> 
+                              </td>
+                              <td>
+                                  <!-- disini adalah script grand totalnya, sekali lagi ingat.  -->
+                                  <!-- vue js hanya bisa di coding satu baris dan tidak bisa -->
+                                  <!-- banyak baris sekaligus pada bagian domnya  -->
+                                <h4> {{barang.reduce((acc, item) => acc + difficulty.find(x => x.id == item.id_difficulty).harga * item.qty, 0)}}</h4>
+                              </td>
+                              <td><button v-on:click="checkout" type="button" class="btn btn-danger"> Checkout </button></td>
+                          </tr>
+    
+                          <!-- ini akan tampil kalau array barang masih belum mempunyai value -->
+                          <tr v-if="!barang.length > 0">
+                              <td class="text-center" colspan="7"> Belum ada data ya! silahkan tambahkan data terlebih dahulu!</td>
+                          </tr>
+                          
+                        </tbody>
+                      </table>
+                </div>
+                
             </div>
         </div>
 
