@@ -52,9 +52,9 @@
                             <td>{{ difficulty.find(x => x.id == row.id_difficulty).nama}}</td>
                             <td>{{ difficulty.find(x => x.id == row.id_difficulty).harga}}</td>
                             <td>
-                                <button type="button" class="btn btn-success" v-on:click="countTambah(index)">+</button>
-                                {{row.qty}}
                                 <button type="button" class="btn btn-danger" v-on:click="countKurang(index)">-</button>
+                                {{row.qty}}
+                                <button type="button" class="btn btn-success" v-on:click="countTambah(index)">+</button>
                             </td>
                             <!-- disini kita mengalikan qty dengan harga pada id dificult -->
                             <!-- kalian hanya bisa log pada bagian javasctipt, bukan bagian dom ya :) -->
@@ -131,9 +131,9 @@
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">QTY:</label>
                         <div class="row col-12">
-                            <button type="button" class="btn btn-success" v-on:click="countTambah">+</button>
-                            <input style="width: min-content;" type="number" class="form-control" v-model="dataModal.qty" id="recipient-name" v-bind:class="{ 'border': !dataModal.qty, 'border-danger': !dataModal.qty, 'border-3': !dataModal.qty }">
                             <button type="button" class="btn btn-danger" v-on:click="countKurang">-</button>
+                            <input style="width: min-content;" type="number" class="form-control" v-model="dataModal.qty" id="recipient-name" v-bind:class="{ 'border': !dataModal.qty, 'border-danger': !dataModal.qty, 'border-3': !dataModal.qty }">
+                            <button type="button" class="btn btn-success" v-on:click="countTambah">+</button>
                         </div>
                         <div v-if="!dataModal.qty" style="display: block !important;" class="invalid-feedback">
                             Mohon QTY di isi!
