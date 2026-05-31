@@ -36,6 +36,15 @@
             transform: translateY(-5px);
             border-color: #34d399;
         }
+    
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-primary selection:text-white">
@@ -54,16 +63,23 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="min-h-screen flex items-center justify-center pt-20 px-6">
-        <div class="max-w-4xl mx-auto text-center">
+    <section class="min-h-screen flex items-center justify-center pt-20 px-6 relative overflow-hidden">
+        <!-- SVG Animated Background -->
+        <object data="assets/tech-bg.svg" type="image/svg+xml" class="absolute inset-0 w-full h-full z-0 opacity-40"></object>
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-darker/80 to-darker z-0"></div>
+        
+        <div class="max-w-4xl mx-auto text-center relative z-10">
             <h2 class="text-primary font-semibold tracking-wide uppercase mb-4">Hello, World! I am</h2>
             <h1 class="text-5xl md:text-7xl font-bold mb-6">Mohammad Alif Maheaven Hidayatullah</h1>
-            <h3 class="text-2xl md:text-4xl font-medium text-slate-400 mb-8">
-                I build <span class="gradient-text">Intelligent Systems</span> & <span class="gradient-text">Robust Infrastructures</span>.
+            <h3 class="text-2xl md:text-3xl font-medium text-slate-400 mb-8 leading-snug">
+                Hardware Engineer & <span class="gradient-text">E2E Solution Architect</span> <br>
+                <span class="text-lg md:text-xl mt-2 block font-normal">Bridging Hardware & Software to Build Innovative Full-Stack Solutions</span>
             </h3>
-            <p class="text-lg text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-                A software engineer and DevOps enthusiast specializing in Kubernetes (K3s), Microservices, AI Agent integrations, and Fullstack Web Development. Passionate about automating workflows and building scalable architectures.
-            </p>
+            <div id="about" class="text-lg text-slate-400 mb-10 max-w-3xl mx-auto leading-relaxed p-6 bg-slate-800/30 border border-slate-700/50 rounded-2xl backdrop-blur-sm">
+                <p>
+                    An adept <strong>Senior Full Stack Web Developer</strong> at PT. Sigma Cipta Caraka (Telkomsigma), I excel in HTML, CSS, JavaScript, and Vue.js, boasting a solid track record of developing complex web applications and enhancing user experience. My collaborative efforts in RESTful API development and problem-solving skills have significantly contributed to successful projects like DigiHotel and E-Materai SCM.
+                </p>
+            </div>
             <div class="flex flex-wrap justify-center gap-4">
                 <a href="#projects" class="px-8 py-3 bg-primary text-white rounded-full font-medium hover:bg-emerald-600 transition shadow-lg shadow-emerald-500/30">View My Work</a>
                 <a href="https://github.com/alifmaheaven" target="_blank" class="px-8 py-3 bg-slate-800 text-white rounded-full font-medium hover:bg-slate-700 transition border border-slate-700"><i class="fa-brands fa-github mr-2"></i>GitHub</a>
@@ -122,30 +138,137 @@
 
     
     <!-- Experience Section -->
-    <section id="experience" class="py-20 px-6">
-        <div class="max-w-7xl mx-auto">
+    <section id="experience" class="py-20 px-6 relative">
+        <div class="max-w-7xl mx-auto relative z-10">
             <div class="text-center mb-16">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Work <span class="text-primary">Experience</span></h2>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Professional <span class="text-primary">Journey</span></h2>
                 <div class="w-20 h-1 bg-primary mx-auto rounded"></div>
             </div>
 
             <div class="max-w-4xl mx-auto">
-                <div class="relative border-l border-slate-700 ml-3 md:ml-6">
-                    <!-- PT Prakhya Tama Cakrawala -->
-                    <div class="mb-10 ml-8 md:ml-10">
-                        <span class="absolute flex items-center justify-center w-6 h-6 bg-primary rounded-full -left-3 ring-8 ring-dark">
-                            <i class="fa-solid fa-briefcase text-white text-xs"></i>
+                <div class="relative border-l border-slate-700 ml-3 md:ml-6 space-y-12">
+                    
+                    <!-- PT Sigma Cipta Caraka -->
+                    <div class="ml-8 md:ml-10 relative">
+                        <span class="absolute flex items-center justify-center w-6 h-6 bg-primary rounded-full -left-11 md:-left-[52px] ring-8 ring-dark">
+                            <i class="fa-solid fa-building text-white text-xs"></i>
                         </span>
-                        <h3 class="flex items-center mb-1 text-xl font-semibold text-white">Fullstack Developer & Infrastructure Engineer</h3>
-                        <time class="block mb-2 text-sm font-normal leading-none text-slate-400">PT Prakhya Tama Cakrawala</time>
-                        <p class="mb-4 text-base font-normal text-slate-400 leading-relaxed">
-                            Spearheaded the development and deployment of enterprise-grade systems and infrastructure:
+                        <h3 class="text-2xl font-bold text-white mb-1">PT. Sigma Cipta Caraka (Telkomsigma)</h3>
+                        <time class="block mb-4 text-sm font-normal leading-none text-slate-400"><i class="fa-regular fa-calendar mr-2"></i>Jul 2019 - Present (6 years 2 months) &middot; Tangerang, Banten</time>
+                        
+                        <div class="space-y-6">
+                            <!-- Role 1 -->
+                            <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-700/50">
+                                <h4 class="text-lg font-semibold text-primary">Implementor Modern Works Microsoft 365</h4>
+                                <time class="block mb-2 text-xs text-slate-400">Aug 2024 - Aug 2025</time>
+                                <p class="text-slate-300 text-sm">Implemented Modern Work solutions (SharePoint, Teams, OneDrive) at PT. Telkom Indonesia, including deployment, configuration, and end-user training.</p>
+                            </div>
+                            
+                            <!-- Role 2 -->
+                            <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-700/50">
+                                <h4 class="text-lg font-semibold text-primary">Senior Web Developer</h4>
+                                <time class="block mb-2 text-xs text-slate-400">Jul 2020 - Aug 2024</time>
+                                <ul class="list-disc list-outside ml-4 text-slate-300 text-sm space-y-1">
+                                    <li><strong>DigiHotel (Telkom)</strong> & <strong>Social Media Platform (Telkom DSO)</strong> – Frontend Developer</li>
+                                    <li><strong>Asset Management System (Bank Maluku)</strong> – Frontend Developer</li>
+                                    <li><strong>LMS & ITMS (PT. Pos Indonesia)</strong> & <strong>LMS (Bukit Asam)</strong> – Learning & Talent Management System</li>
+                                    <li><strong>E-Materai SCM (Peruri)</strong> – Supply Chain Management System</li>
+                                </ul>
+                            </div>
+                            
+                            <!-- Role 3 -->
+                            <div class="bg-slate-800/40 p-5 rounded-xl border border-slate-700/50">
+                                <h4 class="text-lg font-semibold text-primary">Junior Web Developer</h4>
+                                <time class="block mb-2 text-xs text-slate-400">Jul 2019 - Jun 2020</time>
+                                <ul class="list-disc list-outside ml-4 text-slate-300 text-sm space-y-1">
+                                    <li><strong>E-Report (Telkom)</strong> – Reporting System (Frontend Developer)</li>
+                                    <li><strong>LCM (Telin Singapore)</strong> – Internal Lifecycle Management (Full Stack)</li>
+                                    <li><strong>Data Center Rack Management System</strong> – Physical and logistical monitoring (Full Stack)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PT Prakhya Tama Cakrawala (From Context/Agent Work) -->
+                    <div class="ml-8 md:ml-10 relative">
+                        <span class="absolute flex items-center justify-center w-6 h-6 bg-slate-600 rounded-full -left-11 md:-left-[52px] ring-8 ring-dark">
+                            <i class="fa-solid fa-server text-white text-xs"></i>
+                        </span>
+                        <h3 class="text-xl font-bold text-white mb-1">PT Prakhya Tama Cakrawala</h3>
+                        <h4 class="text-lg font-semibold text-primary">Fullstack Developer & Infrastructure Engineer</h4>
+                        <p class="mt-3 text-slate-300 text-sm leading-relaxed">
+                            Architected Hyperconverged Infrastructure (HCI) on Proxmox and deployed a 13-VM SOC environment (Wazuh, Elasticsearch, Kibana, Suricata). Developed Enterprise CRM V2 (Go/React), Pelindo Truck Tracking system (WebSockets, PTT Voice), and a microservices-based Dual-Auth Smart Door system (Kubernetes, Python).
                         </p>
-                        <ul class="list-disc list-inside text-slate-400 space-y-2 mb-4">
-                            <li><strong class="text-slate-300">Security Operations Center (SOC):</strong> Architected a Hyperconverged Infrastructure (HCI) on Proxmox with Ceph, deploying a 13-VM SOC environment including Wazuh SIEM, Elasticsearch, Kibana, Suricata, and HAProxy.</li>
-                            <li><strong class="text-slate-300">Enterprise CRM V2:</strong> Built an internal CRM managing sales pipelines and workflows using a high-performance Go (Golang) backend and React/Ant Design frontend.</li>
-                            <li><strong class="text-slate-300">IoT & Real-Time Tracking:</strong> Developed a live truck tracking platform with WebSockets and Push-To-Talk (PTT) voice features for Pelindo Teluk Lamong.</li>
-                            <li><strong class="text-slate-300">Smart Authentication Systems:</strong> Engineered a microservices-based Dual-Auth Smart Door system (Face Recognition + RFID) utilizing Python, Flask, and Kubernetes (K3s).</li>
+                    </div>
+
+                    <!-- Anara Digital Teknologi -->
+                    <div class="ml-8 md:ml-10 relative">
+                        <span class="absolute flex items-center justify-center w-6 h-6 bg-slate-600 rounded-full -left-11 md:-left-[52px] ring-8 ring-dark">
+                            <i class="fa-solid fa-network-wired text-white text-xs"></i>
+                        </span>
+                        <h3 class="text-xl font-bold text-white mb-1">Anara Digital Teknologi</h3>
+                        <h4 class="text-lg font-semibold text-primary">System Analyst</h4>
+                        <time class="block mb-2 text-xs text-slate-400">Jul 2024 - Jul 2025</time>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Designed and implemented an end-to-end HRIS for an outsourcing company (PT Progress) through close collaboration with UI/UX, development, and QA teams.
+                        </p>
+                    </div>
+
+                    <!-- PT Qlcom Solusi Bisnis -->
+                    <div class="ml-8 md:ml-10 relative">
+                        <span class="absolute flex items-center justify-center w-6 h-6 bg-slate-600 rounded-full -left-11 md:-left-[52px] ring-8 ring-dark">
+                            <i class="fa-brands fa-android text-white text-xs"></i>
+                        </span>
+                        <h3 class="text-xl font-bold text-white mb-1">PT. Qlcom Solusi Bisnis</h3>
+                        <h4 class="text-lg font-semibold text-primary">Internship Mobile Developer</h4>
+                        <time class="block mb-2 text-xs text-slate-400">Jun 2018 - Sep 2018</time>
+                        <ul class="list-disc list-outside ml-4 text-slate-300 text-sm space-y-1">
+                            <li>Developed internal and client Android apps using Java.</li>
+                            <li>Successfully completed projects such as Reminder QL & POS apps.</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Education Section -->
+    <section id="education" class="py-20 bg-dark px-6 border-y border-slate-800">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Education & <span class="text-primary">Certifications</span></h2>
+                <div class="w-20 h-1 bg-primary mx-auto rounded"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Education -->
+                <div>
+                    <h3 class="text-2xl font-bold mb-6 text-white"><i class="fa-solid fa-graduation-cap text-primary mr-3"></i>Education</h3>
+                    <div class="space-y-6">
+                        <div class="card p-6 rounded-2xl">
+                            <h4 class="text-xl font-bold text-white">BINUS ONLINE</h4>
+                            <p class="text-primary font-medium">Bachelor's Degree, Information Technology</p>
+                            <time class="text-sm text-slate-400">Jun 2020 - Jun 2024</time>
+                        </div>
+                        <div class="card p-6 rounded-2xl">
+                            <h4 class="text-xl font-bold text-white">SMK TELKOM MALANG</h4>
+                            <p class="text-primary font-medium">Vocational High School</p>
+                            <time class="text-sm text-slate-400">2016 - 2019</time>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Certifications -->
+                <div>
+                    <h3 class="text-2xl font-bold mb-6 text-white"><i class="fa-solid fa-certificate text-primary mr-3"></i>Certifications</h3>
+                    <div class="card p-6 rounded-2xl h-full">
+                        <ul class="space-y-3 text-slate-300">
+                            <li class="flex items-start"><i class="fa-solid fa-check text-primary mt-1 mr-3"></i> <span>Active Listening for Better Leadership Communication</span></li>
+                            <li class="flex items-start"><i class="fa-solid fa-check text-primary mt-1 mr-3"></i> <span>The Courage of Self Compassion</span></li>
+                            <li class="flex items-start"><i class="fa-solid fa-check text-primary mt-1 mr-3"></i> <span>The Courage Habit</span></li>
+                            <li class="flex items-start"><i class="fa-solid fa-check text-primary mt-1 mr-3"></i> <span>The Healing Power of Compassionate Purpose</span></li>
+                            <li class="flex items-start"><i class="fa-solid fa-check text-primary mt-1 mr-3"></i> <span>Nano Tips for Communicating with Courage at Work</span></li>
                         </ul>
                     </div>
                 </div>
